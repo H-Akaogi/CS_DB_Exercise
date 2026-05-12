@@ -12,7 +12,7 @@ public class DepartmentAccessor
     /// コンストラクタ
     /// </summary>
     /// <param name="context">アプリケーション用DbContext</param>
-    public DepartmentAccessor(AppDbContext context)
+    public DepartmentAccessor(AppDbContext context)//AppDbContextクラスのcontext変数を引数とする
     {
         _context = context;
     }
@@ -20,10 +20,13 @@ public class DepartmentAccessor
     /// <summary>
     /// すべての部署を取得する
     /// </summary>
-    public List<DepartmentEntity> FindAll()
+    public List<DepartmentEntity> FindAll() // List<TEntity>インスタンスメソッド（ものに対して呼び出すメソッド）
+    // 戻り値はList<>
+    // FindAll()と()がついているのでメソッド
+    // staticがないのでインスタンスメソッド
     {
         // ToList()メソッドを使用して、すべての部署を取得する
-        var departments = _context.Departments.ToList();
+        var departments = _context.Departments.ToList();//データ取得
         return departments;
     }
     /// <summary>

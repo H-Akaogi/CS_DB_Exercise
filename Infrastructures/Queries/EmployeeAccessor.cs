@@ -17,21 +17,21 @@ public class EmployeeAccessor
         _context = context;
     }
     /// <summary>
-    /// すべての部署を取得する
+    /// すべての社員を取得する
     /// </summary>
     public List<EmployeeEntity> FindAll()
     {
-        // ToList()メソッドを使用して、すべての部署を取得する
+        // ToList()メソッドを使用して、すべての社員を取得する
         var employees = _context.Employees.ToList();
         return employees;
     }
     /// <summary>
-    /// 指定した部署Idの部署を取得する
+    /// 指定した社員Idの部署を取得する
     /// </summary>
     /// <param name="DeptId">部署Id(主キー)</param>
     public EmployeeEntity? FindById(int DeptId)
     {
-        // Find()メソッドを使用して、指定した部署Idの部署を取得する
+        // Find()メソッドを使用して、指定した社員Idの部署を取得する
         var employee = _context.Employees.Find(DeptId);
         return employee;
     }
