@@ -9,6 +9,7 @@ class Program
     static void Main(string[] args)
     {
         var accessor = new DepartmentAccessor(new AppDbContext());
+
         // すべての部署を取得する
         var departments = accessor.FindAll();
         Console.WriteLine("すべての部署を取得する");
@@ -26,6 +27,17 @@ class Program
         if (department == null)
         {
             Console.WriteLine($"部署Id:101の部署は存在しません。");
+        }
+
+        /// Employees
+        var accessor2 = new EmployeeAccessor(new AppDbContext());
+
+        // すべての社員を取得する
+        var employees = accessor2.FindAll();
+        Console.WriteLine("すべての社員を取得する");
+        foreach (var d in employees)
+        {
+            Console.WriteLine(d);
         }
     }
 }
