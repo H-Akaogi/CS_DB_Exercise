@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace EmployeeEntity.Entities;
+namespace CS_DB_Exercise.Infrastructures.Entities;
 
 [Table("employee")]
-public class EmployeeEntity
+public class EmployeeEntity //Entityはテーブルの構造を決める
 {
     [Key]
     [Column("id")]
