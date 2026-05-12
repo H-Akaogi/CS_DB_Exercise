@@ -1,8 +1,8 @@
 ﻿using CS_DB_Exercise.Infrastructures.Contexts;
 using CS_DB_Exercise.Infrastructures.Entities;
-using CS_DB_Sample.Infrastructures.Queries;
+using CS_DB_Exercise.Infrastructures.Queries;
 
-namespace CS_DB_Sample;
+namespace CS_DB_Exercise;
 
 class Program
 {

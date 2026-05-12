@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using CS_DB_Exercise.Infrastructures.Contexts;
 using CS_DB_Exercise.Infrastructures.Entities;
 
-namespace CS_DB_Sample.Infrastructures.Queries;
+namespace CS_DB_Exercise.Infrastructures.Queries;
 
 public class DepartmentAccessor
 {
