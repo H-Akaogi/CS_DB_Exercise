@@ -39,7 +39,7 @@ class Program
         {
             Console.WriteLine(d);
         }
-        // 指定した社員Idの社員を取得する(存在する部署Id)
+        // 指定した社員Idの社員を取得する(存在する社員Id)
         var employee = accessor2.FindById(4);
         Console.WriteLine($"存在する社員Id:[{employee!.ToString()}]");
 
