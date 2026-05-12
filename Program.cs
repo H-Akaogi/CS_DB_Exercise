@@ -20,7 +20,7 @@ class Program
 
         // 指定した部署Idの部署を取得する(存在する部署Id)
         var department = accessor.FindById(1);
-        Console.WriteLine($"存在する部署Id:{department!.ToString()}");
+        Console.WriteLine($"存在する部署Id:[{department!.ToString()}]");
 
         // 指定した部署Idの部署を取得する(存在しない部署Id)
         department = accessor.FindById(101);
@@ -38,6 +38,16 @@ class Program
         foreach (var d in employees)
         {
             Console.WriteLine(d);
+        }
+        // 指定した社員Idの社員を取得する(存在する部署Id)
+        var employee = accessor2.FindById(4);
+        Console.WriteLine($"存在する社員Id:[{employee!.ToString()}]");
+
+        // 指定した社員Idの社員を取得する(存在しない社員Id)
+        employee = accessor2.FindById(404);
+        if (employee == null)
+        {
+            Console.WriteLine($"社員Id:404の社員は存在しません。");
         }
     }
 }
