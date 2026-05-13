@@ -18,7 +18,7 @@ public class EmployeeEntity //Entityはテーブルの構造を決める
     /// 演習-12 employeeテーブルとdepartmentテーブルを結合可能にする
     /// 所属部署
     /// </summary>
-    [ForeignKey("DeptId")]
+    [ForeignKey("DeptId")]//ForeignKeyを使用(DepartmentEntity側にも同様に)
     public DepartmentEntity? Department { get; set; }
     public override string ToString()
     {

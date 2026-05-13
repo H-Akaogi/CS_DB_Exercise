@@ -90,4 +90,23 @@ public class EmployeeAccessor
             .SingleOrDefault(); //条件に一致するレコードが1件だけ取得する
         return employee;
     }
+    /// <summary>
+    /// 演習-16 データの有無を確認する
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public List<EmployeeEntity>? FindByNameContainsJoinDepartment(string name)
+    // 複数件返る可能性があるものに対してはList<TEntity>を用いる
+    {
+        var employees = _context.Employees
+        .Include(e => e.Department) // カテゴリを結合して取得する
+        .Where(e => e.Name!.Contains(name)) // Where()メソッドで条件指定
+        .ToList(); // ToList()メソッドを使用して、条件を満たすものすべてを取得する
+        if (employees.Count == 0)//一致した結果が0件だった場合
+        {
+            return null;
+        }
+        return employees!;//employeesは検索結果の社員一覧（List）
+    }
+
 }

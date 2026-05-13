@@ -10,7 +10,6 @@ class Program
     {
         // 演習用DbContextを生成する
         var context = new AppDbContext();
-
         // Accessorを生成する
         var departmentAccessor = new DepartmentAccessor(context);
         var accessor = new EmployeeAccessor(context);
@@ -26,6 +25,9 @@ class Program
         Exercise10(accessor, departmentAccessor);
        Exercise11(accessor);*/
         Exercise13(accessor);
+        // 演習-15 トランザクション制御機能を確認する
+        Exercise15(context, departmentAccessor);
+        Exsercise16(accessor);
     }
 
     /// <summary>
@@ -193,7 +195,7 @@ class Program
         Console.WriteLine("演習-13 指定された氏名で社員と所属部署を取得する");
 
         var result = accessor.FindByEmployeeDepartment(name);
-        if (result.Department != null)
+        if (result!.Department != null)
         {
 
             Console.WriteLine(result.Department);
@@ -229,5 +231,71 @@ class Program
             Console.WriteLine(employee);
         }
     }
-}
+    /// <summary>
+    /// 演習-15 トランザクション制御機能を確認する
+    /// </summary>
+    /// <param name="context">演習用DbContext</param>
+    /// <param name="departmentAccessor">Departmentテーブルアクセスクラス</param>
+    /// <returns></returns>
+    private static void Exercise15(AppDbContext context, DepartmentAccessor departmentAccessor)
+    {
+        // usingステートメントを使うことで、トランザクションが自動的に破棄される
+        using var transaction = context.Database.BeginTransaction(); // 手前にusing?
+        // トランザクション開始
+        Console.WriteLine("トランザクションを開始しました。");
 
+        Console.Write("新しい部署名を入力してください->");
+        var name = Console.ReadLine();
+        var entity = new DepartmentEntity
+        {
+            Id = 0, // Idは自動採番されるため、0を指定する
+            Name = name
+        };
+        // Create()メソッドを使用して、departmentテーブルに新しい部署を登録する
+        var result = departmentAccessor.Create(entity);
+        Console.WriteLine($"新しい部署を登録しました: 部署Id={result.Id} , 部署名={result.Name}");
+
+        Console.Write("トランザクションをコミットしますか？ (y/n)->");
+        var input = Console.ReadLine();
+        if (input?.ToLower() == "y")
+        {
+            // トランザクションをコミットする
+            transaction.Commit();
+            Console.WriteLine("トランザクションをコミットしました。");
+        }
+        else
+        {
+            // トランザクションをロールバックする
+            transaction.Rollback();
+            Console.WriteLine("トランザクションをロールバックしました。");
+        }
+
+        // 登録した部署を含むすべての部署を取得して表示する
+        var departments = departmentAccessor.FindAll();
+        foreach (var department in departments)
+        {
+            Console.WriteLine($"部署Id={department.Id} , 部署名={department.Name}");
+        }
+    }
+    /// <summary>
+    /// 演習-16 データの有無を確認する
+    /// </summary>
+    static void Exsercise16(EmployeeAccessor accessor)
+    {
+        Console.WriteLine("社員名を入力してください->");
+        string name = Console.ReadLine()!;
+        Console.WriteLine($"演習-16 データの有無を確認する");
+        var results = accessor.FindByNameContainsJoinDepartment(name);//複数検索結果がある前提で複数形にしておく
+        if (results == null)
+        {
+            Console.WriteLine($"{name}さんは、存在しません。");
+        }
+        else
+        {
+            foreach (var result in results)
+            {
+                Console.WriteLine($"{name}さんは、{result.Department!.Name}に所属する社員です");
+            }
+        }
+    }
+}
