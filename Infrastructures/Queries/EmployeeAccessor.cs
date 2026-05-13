@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;*/
 using CS_DB_Exercise.Infrastructures.Contexts;
 using CS_DB_Exercise.Infrastructures.Entities;
+using Microsoft.VisualBasic;
 
 namespace CS_DB_Exercise.Infrastructures.Queries;
 
@@ -29,10 +30,18 @@ public class EmployeeAccessor
     /// 指定した社員Idの部署を取得する
     /// </summary>
     /// <param name="DeptId">部署Id(主キー)</param>
-    public EmployeeEntity? FindById(int DeptId)
+    public EmployeeEntity? FindByDeptId(int deptId)
     {
         // Find()メソッドを使用して、指定した社員Idの部署を取得する
-        var employee = _context.Employees.Find(DeptId);
+        var employee = _context.Employees.Find(deptId);
         return employee;
+    }
+    public List<EmployeeEntity> FindByNameContains(string keyword)
+    //List<>型にする
+    {
+        // Where(), ToList()メソッドを使用して、指定した社員Idの部署を取得する
+        return _context.Employees
+       .Where(i => i.Name!.Contains(keyword))
+       .ToList();
     }
 }
