@@ -11,6 +11,12 @@ public class DepartmentEntity
     public int Id { get; set; }
     [Column("name")]
     public string? Name { get; set; }
+
+    /// <summary>
+    /// 演習-12 employeeテーブルとdepartmentテーブルを結合可能にする
+    /// 所属社員
+    /// </summary>
+    public List<EmployeeEntity>? Employees { get; set; }
     public override string ToString()
     {
         return $"部署Id: {Id}, 部署名Name: {Name}";

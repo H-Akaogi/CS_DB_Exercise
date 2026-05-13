@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;*/
 using System.Security.Cryptography.X509Certificates;
 using CS_DB_Exercise.Infrastructures.Contexts;
 using CS_DB_Exercise.Infrastructures.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 
 namespace CS_DB_Exercise.Infrastructures.Queries;
@@ -77,6 +78,16 @@ public class EmployeeAccessor
             _context.Employees.Remove(employee);
             _context.SaveChanges();
         }
+        return employee;
+    }
+
+    // 演習-13 指定された氏名で社員と所属部署を取得する
+    public EmployeeEntity FindByEmployeeDepartment(string name)
+    {
+        var employee = _context.Employees
+            .Include(e => e.Department) //表の結合(Department Column)
+            .Where(e => e.Name == name) //nameと一致する場所を探す
+            .SingleOrDefault(); //条件に一致するレコードが1件だけ取得する
         return employee;
     }
 }

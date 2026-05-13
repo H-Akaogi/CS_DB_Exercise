@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;*/
 using CS_DB_Exercise.Infrastructures.Contexts;
 using CS_DB_Exercise.Infrastructures.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CS_DB_Exercise.Infrastructures.Queries;
 
@@ -37,6 +38,20 @@ public class DepartmentAccessor
     {
         // Find()メソッドを使用して、指定した部署Idの部署を取得する
         var department = _context.Departments.Find(departmentId);
+        return department;
+    }
+
+    /// <summary>
+    /// 演習-14 指定された部署Idの部署と所属社員を取得する
+    /// </summary>
+    /// <param name="id">部署Id</param>
+    /// <returns>取得結果</returns>
+    public DepartmentEntity? FindByIdJoinEmployee(int id)
+    {
+        var department = _context.Departments
+            .Include(d => d.Employees)
+            .Where(d => d.Id == id)
+            .SingleOrDefault();
         return department;
     }
 }
