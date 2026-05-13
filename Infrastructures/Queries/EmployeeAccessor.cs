@@ -1,5 +1,6 @@
 /*using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;*/
+using System.Security.Cryptography.X509Certificates;
 using CS_DB_Exercise.Infrastructures.Contexts;
 using CS_DB_Exercise.Infrastructures.Entities;
 using Microsoft.VisualBasic;
@@ -43,5 +44,39 @@ public class EmployeeAccessor
         return _context.Employees
        .Where(i => i.Name!.Contains(keyword))
        .ToList();
+    }
+    // 新規社員の登録
+    public EmployeeEntity Create(EmployeeEntity employee)
+    {
+        // 新規社員の追加
+        var result = _context.Employees.Add(employee);
+        // 変更を永続化する
+        _context.SaveChanges();
+        return result.Entity;
+    }
+    // 社員名の変更
+    public EmployeeEntity? UbdateById(EmployeeEntity employee)
+    {
+        // 社員IDの取得
+        var result = _context.Employees.Find(employee.Id);
+        if (employee == null)
+        {
+            return null;
+        }
+        result!.Name = employee.Name;
+        result.DeptId = employee.DeptId;
+        // 変更を永続化する
+        _context.SaveChanges();
+        return employee;
+    }
+    public EmployeeEntity? DeleteById(int id)
+    {
+        var employee = _context.Employees.Find(id);
+        if (employee != null)
+        {
+            _context.Employees.Remove(employee);
+            _context.SaveChanges();
+        }
+        return employee;
     }
 }
