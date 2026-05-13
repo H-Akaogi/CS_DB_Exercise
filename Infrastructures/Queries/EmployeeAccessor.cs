@@ -82,7 +82,7 @@ public class EmployeeAccessor
     }
 
     // 演習-13 指定された氏名で社員と所属部署を取得する
-    public EmployeeEntity FindByEmployeeDepartment(string name)
+    public EmployeeEntity? FindByEmployeeDepartment(string name)
     {
         var employee = _context.Employees
             .Include(e => e.Department) //表の結合(Department Column)
