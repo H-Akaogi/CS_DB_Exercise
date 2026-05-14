@@ -14,6 +14,7 @@ public class DepartmentAccessor
     /// </summary>
     /// <param name="context">アプリケーション用DbContext</param>
     public DepartmentAccessor(AppDbContext context)//AppDbContextクラスのcontext変数を引数とする
+                                                   // アクセス修飾子 クラス名 (外から渡される依存オブジェクト)
     {
         _context = context;
     }
@@ -22,6 +23,7 @@ public class DepartmentAccessor
     /// すべての部署を取得する
     /// </summary>
     public List<DepartmentEntity> FindAll() // List<TEntity>インスタンスメソッド（ものに対して呼び出すメソッド）
+    // アクセス修飾子 戻り値の型 メソッド名 (引数なし)
     // 戻り値はList<>
     // FindAll()と()がついているのでメソッド
     // staticがないのでインスタンスメソッド
@@ -35,6 +37,7 @@ public class DepartmentAccessor
     /// </summary>
     /// <param name="departmentId">部署Id(主キー)</param>
     public DepartmentEntity? FindById(int departmentId)
+    // アクセス修飾子 戻り値の型 メソッド名 (引数)
     {
         // Find()メソッドを使用して、指定した部署Idの部署を取得する
         var department = _context.Departments.Find(departmentId);
@@ -59,9 +62,10 @@ public class DepartmentAccessor
     /// </summary>
     /// <param name="department"></param>
     public DepartmentEntity Create(DepartmentEntity department)
+    // アクセス修飾子 戻り値（DepartmentEntityを返す） メソッド名 (引数：入力としてDepartmentEntityを受け取り新規作成)
     {
         var result = _context.Departments.Add(department);
-        // departmentniに新しい部署を追加
+        // DepartmentEntityに新しい部署を追加
         _context.SaveChanges(); //SQLを実行する
         return result.Entity; //DepartmentEntityに追加
     }

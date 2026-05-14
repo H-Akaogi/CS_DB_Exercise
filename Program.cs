@@ -240,7 +240,9 @@ class Program
     private static void Exercise15(AppDbContext context, DepartmentAccessor departmentAccessor)
     {
         // usingステートメントを使うことで、トランザクションが自動的に破棄される
-        using var transaction = context.Database.BeginTransaction(); // 手前にusing?
+        using var transaction = context.Database.BeginTransaction();
+        // 手前にusing: リソース（接続など）を確実に解放するための仕組み（安全装置）
+        // context.Database: EF CoreのDB操作用オブジェクト
         // トランザクション開始
         Console.WriteLine("トランザクションを開始しました。");
 
@@ -286,6 +288,7 @@ class Program
         string name = Console.ReadLine()!;
         Console.WriteLine($"演習-16 データの有無を確認する");
         var results = accessor.FindByNameContainsJoinDepartment(name);//複数検索結果がある前提で複数形にしておく
+        // 型推論var 変数名 = オブジェクト.メソッド(引数)
         if (results == null)
         {
             Console.WriteLine($"{name}さんは、存在しません。");
